@@ -149,45 +149,4 @@ def printMatrix(matrix, header):
 printMatrix(corrMatrix, dogHeader)
 #printMatrix(pValueMatrix, dogHeader)
 
-
-#for tissueIndex in range(1, len(dogHeader)):
-#    currTissue = dogHeader[tissueIndex]
-#    if(humanGenes[0][tissueIndex] == "NA"):
-#        for currGene in humanGenes:
-#            assert(currGene[tissueIndex] == "NA")
-#    else:
-#        outputGenes = dict()
-#        for currGene in commonGeneList:
-#            if(dogGeneMap[humanToDogMap[currGene]][tissueIndex] > 1 or humanGeneMap[currGene][tissueIndex] > 1):
-#                outputGenes[currGene] = [-1, -1, -1, -1]
-
-#        dogGenes.sort(key=lambda x:x[tissueIndex], reverse=True)
-#        humanGenes.sort(key=lambda x:x[tissueIndex], reverse=True)
-
-#        dogIndex = -1
-#        prevValue = -1
-#        for currGene in dogGenes:
-#            if(dogToHumanMap[currGene[0]] in outputGenes):
-#                if(currGene[tissueIndex] != prevValue):
-#                    dogIndex += 1
-#                    prevValue = currGene[tissueIndex]
-#                outputGenes[dogToHumanMap[currGene[0]]][0] = dogIndex
-#                outputGenes[dogToHumanMap[currGene[0]]][2] = currGene[tissueIndex]
-
-#        humanIndex = -1
-#        prevValue = -1
-#        for currGene in humanGenes:
-#            if(currGene[0] in outputGenes):
-#                if(currGene[tissueIndex] != prevValue):
-#                    humanIndex += 1
-#                    prevValue = currGene[tissueIndex]
-#                outputGenes[currGene[0]][1] = humanIndex
-#                outputGenes[currGene[0]][3] = currGene[tissueIndex]
-
-#        with open("tissue_ranks/" + currTissue + ".rank", "w") as tissueFile:
-#            tissueFile.write("human_gene_name\tdog_rank\thuman_rank\tdog_exp\thuman_exp\n")
-#            for currGene in outputGenes:
-#                geneValue = outputGenes[currGene]
-#                tissueFile.write(currGene + "\t" + str(geneValue[0]) + "\t" + str(geneValue[1]) + "\t" + str(geneValue[2]) + "\t" + str(geneValue[3]) + "\n")
-
                 
