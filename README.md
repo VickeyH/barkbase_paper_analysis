@@ -6,32 +6,27 @@ In other words, while they accurately represent the code that was run to produce
 they will require significant rewrites to function outside of our original development environment
 as they contain hard coded path information and references to environment-specific packages.
 
-File descriptions, loosely grouped by analysis:
+## File descriptions, loosely grouped by analysis:
 
-RNAseq alignment and assembly:
-   RNAseq.sh
+- RNAseq alignment and assembly
+  - RNAseq.sh
 
---ATACseq--
+### ATACseq
 
-Alignment and peak calling:
-ATACseq.sh
+- Alignment and peak calling
+  - ATACseq.sh
+- ATACseqQC plotting (figure 8.)
+  - ATACQCplotting.R
+- Novel RNA ATACseq proximity (figure 9.)
+  - novelTranscriptsToATAC.R
 
-ATACseqQC plotting (figure 8.)
-ATACQCplotting.R
+### Human / Dog expression comparison
 
-Novel RNA ATACseq proximity (figure 9.)
-novelTranscriptsToATAC.R
-
---Human / Dog expression comparison--
-
-Normalization of human read counts:
-normalizeGTEx.R
-
-Production of human tissue medians:
-makeHumanMedians.R
- 
-Production of dog tissue medians:
-makeDogMedians.R
- 
-Production of spearman matrix:
-/seq/vgb/barkbase/human_comparison/produceComparableRankedFiles.py
+- Normalization of human read counts
+  - normalizeGTEx.R
+- Production of human tissue medians
+  - makeHumanMedians.R
+- Production of dog tissue medians
+  - makeDogMedians.R
+- Production of spearman matrix
+  - produceComparableRankedFiles.py
