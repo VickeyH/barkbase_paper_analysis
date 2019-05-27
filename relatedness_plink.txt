@@ -1,0 +1,27 @@
+Relatedness calculated in Plink using the following commands:
+
+# Extract biallelic variants from the VCF
+/seq/vgb/Kate/plink --allow-no-sex --allow-extra-chr --dog
+--vcf-filter --double-id --biallelic-only --vcf ../r24.vcf --make-bed --out r24
+
+# Name variants by position
+/seq/vgb/Kate/plink --allow-no-sex --allow-extra-chr --dog --bfile r24
+--set-missing-var-ids @:# -make-bed --out r24
+
+# Filter SNPs with > 5% missing calls
+/seq/vgb/Kate/plink --allow-no-sex --allow-extra-chr --dog --bfile r24
+--geno 0.05 --make-bed --out r24
+
+# Calculate SNPs to prune based on LD
+/seq/vgb/Kate/plink --allow-no-sex --allow-extra-chr --dog --bfile r24
+--indep 50 5 2 --out r24_prune
+
+# Remove SNPs in high LD
+/seq/vgb/Kate/plink --allow-no-sex --allow-extra-chr --dog --bfile r24
+--extract r24_prune.prune.in --make-bed --out r24_pruned
+
+# Calculate relatedness among samples
+/seq/vgb/Kate/plink --allow-no-sex --allow-extra-chr --dog --bfile
+r24_pruned --genome --out r24_pruned_rel
+
+Relatedness summary: r24_pruned_rel.genome

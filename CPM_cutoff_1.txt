@@ -1,0 +1,57 @@
+The TMM adjusted CPM values were created from the raw read counts
+(/seq/vgb/barkbase/counts/raw_read_counts/) using edgeR using the
+following commands:
+__________________________________________________________________________
+Gene-level:
+
+use R-3.5
+R
+library(edgeR)
+counts <-
+read.delim("/seq/vgb/barkbase/counts/raw_read_counts/gene_count_matrix.csv",
+row.names="gene_id",sep=",")
+
+dge <- DGEList(counts=counts)
+
+# Filtering step recommended in the edgeR users guide to keep only
+# genes/transcripts expressed at > 1 CPM in at least 2 samples. 
+# "We filter out lowly expressed genes using the following commands:
+# Here, a CPM of 1 corresponds to a count of 6-7 in the smallest
+# sample. A requirement for expression in two or more libraries is
+# used as the minimum number of samples in each group is two. This
+# ensures that a gene will be retained if it is only expressed in both
+# samples in group 2. It is also recommended to recalculate the
+# library sizes of the DGEList object after the filtering though the
+# difference is usually negligible."
+
+keep <- rowSums(cpm(dge)>1) >= 2
+dge <- dge[keep, , keep.lib.sizes=FALSE]
+
+# Calculate normalization factors
+dge <- calcNormFactors(dge, method="TMM")
+
+# Apply normalization factors to read counts
+cpm <- cpm(dge)
+
+# Output table
+write.table(cpm, file="TMM_norm_gene_counts.txt", sep="\t", col.names=NA, quote=FALSE)
+
+___________________________________________________________________________
+Transcript-level:
+R
+library(edgeR)
+counts <-
+read.delim("/seq/vgb/barkbase/counts/raw_read_counts/transcript_count_matrix.csv",
+row.names="transcript_id",sep=",")
+
+dge <- DGEList(counts=counts)
+
+keep <- rowSums(cpm(dge)>1) >= 2
+
+dge <- dge[keep, , keep.lib.sizes=FALSE]
+
+dge <- calcNormFactors(dge, method="TMM")
+
+cpm <- cpm(dge)
+
+write.table(cpm, file="TMM_norm_transcript_counts.txt", sep="\t", col.names=NA, quote=FALSE)

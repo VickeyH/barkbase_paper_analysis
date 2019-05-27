@@ -1,0 +1,15 @@
+gene_count_matrix.csv and  transcript_count_matrix.csv were generated using the script:
+/seq/vgb/barkbase/scripts/prepDE.py
+
+This script was provided by the creators of StringTie here:
+http://ccb.jhu.edu/software/stringtie/dl/prepDE.py
+
+More information:
+http://ccb.jhu.edu/software/stringtie/index.shtml?t=manual#deseq
+
+I ran the script using the -l flag to pass in the read length of 101bp:
+
+python prepDE.py -i sample_lst.txt -l 101
+
+The list of sample names and the paths to their gtf files is here:
+/seq/vgb/barkbase/scripts/lists/sample_lst.txt

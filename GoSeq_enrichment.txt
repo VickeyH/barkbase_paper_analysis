@@ -1,0 +1,72 @@
+# GoSeq analysis was performed on the gene lists by following these commands in R, based on script by Jessica Hekman:
+
+use R-3.5
+R
+library("BiocManager")
+library(goseq)
+library(GO.db)
+supportedOrganisms()
+
+#Overlapping genes:
+genes.int <- genes.int <- unique(read.table ("", stringsAsFactors=F, header=F)$V1)
+genes.back <- unique(read.table("Ensembl_orthologs.txt", stringsAsFactors=F, header=F)$V1)
+genes <- as.integer(genes.back %in% genes.int)
+names(genes) <- genes.back
+pwf=nullp(genes,"hg19","geneSymbol")
+
+#Warning message:
+Loading hg19 length data...
+#Warning message:
+#In pcls(G) : initial point very close to some inequality constraints
+
+GO.wall=goseq(pwf,"hg19","geneSymbol")
+#Fetching GO annotations...
+#
+#For 1327 genes, we could not find any categories. These genes will be excluded.
+#To force their use, please run with use_genes_without_cat=TRUE (see documentation).
+#This was the default behavior for version 1.15.1 and earlier.
+#Calculating the p-values...
+#'select()' returned 1:1 mapping between keys and columns
+
+GO.wall$over_rep_adj <- p.adjust(GO.wall$over_represented_pvalue, method="BH")
+GO.wall$under_rep_adj <- p.adjust(GO.wall$under_represented_pvalue, method="BH")
+GO.wall$definition <- select(GO.db, keys=GO.wall$category, columns = c("DEFINITION"), keytype="GOID")$DEFINITION
+dim(GO.wall[GO.wall$over_rep_adj<.05,])
+dim(GO.wall[GO.wall$under_rep_adj<.05,])
+
+go.fdr <- GO.wall[GO.wall$over_rep_adj < 0.05 ,]
+go.fdr.sorted <- go.fdr  [order( go.fdr$over_rep_adj ), ]
+write.table(go.fdr.sorted, file="GO_overlapping_ensembl_enrichment.txt", sep="\t", col.names=NA, quote=FALSE)
+______________________________________
+#Genes we don't see:
+use R-3.5
+R
+library("BiocManager")
+library(goseq)
+library(GO.db)
+supportedOrganisms()
+
+genes.int <- genes.int <- unique(read.table ("genes_we_dont_see_orthologs.txt", stringsAsFactors=F, header=F)$V1)
+genes.back <- unique(read.table("Ensembl_orthologs.txt", stringsAsFactors=F, header=F)$V1)
+genes <- as.integer(genes.back %in% genes.int)
+names(genes) <- genes.back
+pwf=nullp(genes,"hg19","geneSymbol")
+GO.wall=goseq(pwf,"hg19","geneSymbol")
+#Fetching GO annotations...
+#
+#For 1327 genes, we could not find any categories. These genes will be excluded.
+#To force their use, please run with use_genes_without_cat=TRUE (see documentation).
+#This was the default behavior for version 1.15.1 and earlier.
+#Calculating the p-values...
+#'select()' returned 1:1 mapping between keys and columns
+
+GO.wall$over_rep_adj <- p.adjust(GO.wall$over_represented_pvalue, method="BH")
+GO.wall$under_rep_adj <- p.adjust(GO.wall$under_represented_pvalue, method="BH")
+GO.wall$definition <- select(GO.db, keys=GO.wall$category, columns = c("DEFINITION"), keytype="GOID")$DEFINITION
+dim(GO.wall[GO.wall$over_rep_adj<.05,])
+dim(GO.wall[GO.wall$under_rep_adj<.05,])
+
+go.fdr <- GO.wall[GO.wall$over_rep_adj < 0.05,]
+go.fdr.sorted <- go.fdr  [order( go.fdr$over_rep_adj ), ]
+write.table(go.fdr.sorted, file="GO_genes_we_dont_see_enrichment.txt", sep="\t", col.names=NA, quote=FALSE)
+
