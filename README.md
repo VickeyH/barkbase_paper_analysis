@@ -8,8 +8,15 @@ as they contain hard coded path information and references to environment-specif
 
 ## File descriptions, loosely grouped by analysis:
 
+### RNAseq processing (alignment, assembly, abundance estimation)
 - RNAseq alignment and assembly
   - RNAseq.sh
+- Calculating raw read counts from StringTie output (using the prepDE.py script from the StringTie online manual)
+  - calc_read_count.txt
+- Calculating TMM-normalized CPM values in edgeR (and filtering transcripts not expressed at at least 1 CPM in 2 or more dogs)
+  - CPM_cutoff_1.txt
+- Calculating TMM-normalized CPM values in edgeR (and filtering transcripts not expressed at at least 0.16 CPM in 2 or more dogs)
+  - CPM_cutoff_0.16.txt
 
 ### ATACseq
 
@@ -30,3 +37,10 @@ as they contain hard coded path information and references to environment-specif
   - makeDogMedians.R
 - Production of spearman matrix
   - produceComparableRankedFiles.py
+  
+### Ungrouped
+
+- GoSeq enrichment analysis
+  - GoSeq_enrichment.txt
+- Calculating relatedness using Plink’s pi-hat score
+  - relatedness_plink.txt
