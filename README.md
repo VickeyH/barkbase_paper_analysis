@@ -1,5 +1,5 @@
 # barkbase_paper_analysis
-Analysis scripts relating to the Barkbase paper.
+Analysis scripts relating to the Barkbase paper (https://www.mdpi.com/2073-4425/10/6/433/pdf).
 
 NOTE: These files are presented as-is, for informational purposes.
 In other words, while they accurately represent the code that was run to produce the paper analyses
